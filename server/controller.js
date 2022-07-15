@@ -238,11 +238,13 @@ module.exports = {
         ).catch(err => console.log(err))
     },
     createCity: (req, res) => {
-        let {name} = req.body
+        let {name, rating, countryId} = req.body
         sequelize.query(`
         INSERT INTO cities (name, rating, country_id) 
-        VALUES (${name}, ${}), (${});
-        `).then(dbRes => {
+        VALUES ('${name}', ${rating}, '${countryId}');
+        `
+        //when i write countryId instead of country_id it adds the countries but leaves the country name undefined. if i change the countryId back to country_id it wont add the city
+        ).then(dbRes => {
             res.status(200).send(dbRes[0])
         })
         .catch(err => console.log(err))
